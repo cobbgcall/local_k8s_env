@@ -1,0 +1,8 @@
+1.- Create velero namespace.
+2.- Create minio pvc.
+3.- Deploy minio deployment/service.
+4.- Deploy velero backupstoragelocation.
+5.- Create velero secret.
+6.- Verify that minio service is available in the port deployed.
+7.- Verify that velero-plugin image version is available. (For example checking at dockerhub).
+8.- Deploy velero: velero install --provider aws --plugins velero/velero-plugin-for-aws:latest --bucket minio --secret-file ./credentials-velero --use-volume-snapshots=false --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://minio.velero.svc.cluster.local:9000
