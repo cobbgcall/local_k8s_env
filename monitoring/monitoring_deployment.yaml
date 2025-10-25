@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring-deployment
+  namespace: monitoring
+  labels:
+    app: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monitoring
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: ubuntu/prometheus:3-24.04_stable
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus/"
+          ports:
+          - containerPort: 9090
+            name: prometheus
+            protocol: TCP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: prometheus-storage
+              mountPath: /prometheus
+            - name: prometheus-config
+              mountPath: /etc/prometheus
+        - name: grafana
+          image: grafana/grafana:main-ubuntu
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 3000
+            name: http-grafana
+            protocol: TCP
+          resources:
+            requests:
+              memory: "768Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: grafana-storage
+              mountPath: /var/lib/grafana
+        - name: jaeger
+          image: jaegertracing/jaeger:2.11.0
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 16686
+            name: http-jaeger
+            protocol: TCP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      volumes:
+        - name: prometheus-storage
+          persistentVolumeClaim:
+            claimName: prometheus-storage
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-storage

@@ -4,7 +4,7 @@
 
 Kubernetes es una plataforma de código abierto que automatiza el despliegue, la administración y el escalado de aplicaciones en contenedores. Permite organizar y controlar múltiples contenedores en diferentes servidores, facilitando la operación de servicios distribuidos.
 
-Las aplicaciones incluidas en este repositorio tienen como objetivo establecer una base para realizar respaldos del cluster (Velero), contar con un registro privado de contenedores (Harbor), monitorear el cluster (Prometheus, Jaeger y Grafana) y disponer de una herramienta para CI/CD (Jenkins). En cada carpeta encontrarás los scripts y recursos necesarios para instalar y configurar cada una de estas soluciones.
+Las aplicaciones incluidas en este repositorio tienen como objetivo establecer una base para realizar respaldos del cluster (Velero), contar con un registro privado de contenedores (Harbor), monitorear el cluster y las aplicaciones desplegadas en él,(Prometheus, Jaeger y Grafana) asi como de disponer de una herramienta para CI/CD. En cada carpeta encontrarás los scripts y recursos necesarios para instalar y configurar cada una de estas soluciones.
 
 Las aplicaciones que se despliegan o instalan en este repositorio tienen el objetivo de establecer una base para realizar backups del cluster, contar con un registro privado de contenedores, monitorear el cluster y disponer de una herramienta para CI/CD. En cada carpeta se entregarán los scripts y recursos necesarios para estas instalaciones.
 
